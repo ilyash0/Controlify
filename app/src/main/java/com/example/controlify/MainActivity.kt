@@ -1,7 +1,6 @@
 package com.example.controlify
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,16 +8,21 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.controlify.databinding.ActivityMainBinding
+import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
+    private val vm: ServersViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ServerAdapter
+    private lateinit var adapter: ServersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,17 +36,22 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+//        binding.fab.setOnClickListener { view ->
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null)
+//                .setAnchorView(R.id.fab).show()
+//        }
+        binding.fab.setOnClickListener {
+            showAddServerDialog()
         }
 
 
         recyclerView = findViewById(R.id.recyclerViewServers)
         recyclerView.layoutManager = GridLayoutManager(this, 3)
 
-        adapter = ServerAdapter(getSampleData())
+        adapter = ServersAdapter(mutableListOf()) { server ->
+            // обработка клика по серверу
+        }
         recyclerView.adapter = adapter
     }
 
@@ -68,14 +77,28 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-    private fun getSampleData(): List<ServerItem> {
-        return listOf(
-            ServerItem("Server #1", "Updated today", R.drawable.ic_launcher_background),
-            ServerItem("Server #2", "Updated yesterday", R.drawable.ic_launcher_background),
-            ServerItem("Server #3", "Updated 2 days ago", R.drawable.ic_launcher_background),
-            ServerItem("Server #4", "Updated 2 days ago", R.drawable.ic_launcher_background),
-            ServerItem("Server #5", "Updated 3 days ago", R.drawable.ic_launcher_background),
-            ServerItem("Server #6", "Updated last week", R.drawable.ic_launcher_background)
-        )
+    private fun showAddServerDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_server, null)
+        val etName = dialogView.findViewById<EditText>(R.id.etName)
+        val etHost = dialogView.findViewById<EditText>(R.id.etHost)
+        val etPort = dialogView.findViewById<EditText>(R.id.etPort)
+
+        AlertDialog.Builder(this)
+            .setTitle("Новый сервер")
+            .setView(dialogView)
+            .setPositiveButton("Сохранить") { _, _ ->
+                val newItem = ServerItem(
+                    id = UUID.randomUUID().toString(),
+                    name = etName.text.toString(),
+                    updatedInfo = "Updated today",
+                    imageResId = R.drawable.ic_launcher_background,
+                    host = etHost.text.toString(),
+                    port = etPort.text.toString().toIntOrNull() ?: 22
+                )
+                vm.addServer(newItem)
+                adapter.insert(newItem)
+            }
+            .setNegativeButton("Отмена", null)
+            .show()  // простой UI без отдельного Activity :contentReference[oaicite:5]{index=5}
     }
 }

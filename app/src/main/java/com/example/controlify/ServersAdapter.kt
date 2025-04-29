@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ServerAdapter(private val items: List<ServerItem>) :
-    RecyclerView.Adapter<ServerAdapter.ViewHolder>() {
+class ServersAdapter(private val items: MutableList<ServerItem>, private val onClick: (ServerItem) -> Unit) :
+    RecyclerView.Adapter<ServersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -22,6 +22,11 @@ class ServerAdapter(private val items: List<ServerItem>) :
 
     override fun getItemCount(): Int = items.size
 
+    fun insert(item: ServerItem) {
+        items.add(item)
+        notifyItemInserted(items.lastIndex)
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageServer: ImageView = itemView.findViewById(R.id.imageServer)
         private val textTitle: TextView = itemView.findViewById(R.id.textTitle)
@@ -29,7 +34,7 @@ class ServerAdapter(private val items: List<ServerItem>) :
 
         fun bind(item: ServerItem) {
             imageServer.setImageResource(item.imageResId)
-            textTitle.text = item.title
+            textTitle.text = item.name
             textUpdated.text = item.updatedInfo
         }
     }
