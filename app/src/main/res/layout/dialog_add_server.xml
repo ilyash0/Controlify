@@ -8,21 +8,21 @@
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Имя сервера"
+        android:hint="@string/server_name"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etHost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Хост (IP или домен)"
+        android:hint="@string/host"
         android:inputType="textUri" />
 
     <EditText
         android:id="@+id/etPort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Порт (22)"
+        android:hint="@string/port"
         android:inputType="number" />
 
 </LinearLayout>

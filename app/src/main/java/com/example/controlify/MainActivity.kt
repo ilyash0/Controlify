@@ -84,9 +84,9 @@ class MainActivity : AppCompatActivity() {
         val etPort = dialogView.findViewById<EditText>(R.id.etPort)
 
         AlertDialog.Builder(this)
-            .setTitle("Новый сервер")
+            .setTitle("New Server")
             .setView(dialogView)
-            .setPositiveButton("Сохранить") { _, _ ->
+            .setPositiveButton("Save") { _, _ ->
                 val newItem = ServerItem(
                     id = UUID.randomUUID().toString(),
                     name = etName.text.toString(),
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                 vm.addServer(newItem)
                 adapter.insert(newItem)
             }
-            .setNegativeButton("Отмена", null)
-            .show()  // простой UI без отдельного Activity :contentReference[oaicite:5]{index=5}
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 }
