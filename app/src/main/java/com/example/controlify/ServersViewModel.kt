@@ -1,17 +1,22 @@
 package com.example.controlify
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ServersViewModel : ViewModel() {
-    private val _servers = MutableLiveData<MutableList<ServerItem>>(mutableListOf())
-    val servers: MutableLiveData<MutableList<ServerItem>> = _servers
+class ServersViewModel(private val context: Context) : ViewModel() {
+    private val initial = Prefs.getServers(context)
+    private val _servers = MutableLiveData<MutableList<ServerItem>>(initial)
+    val servers: LiveData<MutableList<ServerItem>> = _servers
 
     fun addServer(item: ServerItem) {
-        _servers.value?.let {
-            it.add(item)
-            _servers.value = it   // Обновляем LiveData
-        }
+        val current = _servers.value ?: emptyList()
+        val updated = current + item
+        _servers.value = updated.toMutableList()
+        Prefs.saveServers(context, updated)
+    }
+    fun getServers(): MutableList<ServerItem> {
+        return _servers.value!!
     }
 }

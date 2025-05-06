@@ -18,7 +18,7 @@ import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
-    private val vm: ServersViewModel by viewModels()
+    private val vm: ServersViewModel by viewModels { ViewModelFactory(this) }
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewServers)
         recyclerView.layoutManager = GridLayoutManager(this, 3)
 
-        adapter = ServersAdapter(mutableListOf()) { server ->
+        adapter = ServersAdapter(vm.getServers()) { server ->
             // обработка клика по серверу
         }
         recyclerView.adapter = adapter
