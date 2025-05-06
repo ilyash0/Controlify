@@ -16,7 +16,4 @@ class ServersViewModel(private val context: Context) : ViewModel() {
         _servers.value = updated.toMutableList()
         Prefs.saveServers(context, updated)
     }
-    fun getServers(): MutableList<ServerItem> {
-        return _servers.value!!
-    }
 }

@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewServers)
         recyclerView.layoutManager = GridLayoutManager(this, 3)
 
-        adapter = ServersAdapter(vm.getServers()) { server ->
+        adapter = ServersAdapter(vm.servers.value!!) { server ->
             // обработка клика по серверу
         }
         recyclerView.adapter = adapter
