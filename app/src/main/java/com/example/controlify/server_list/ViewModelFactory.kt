@@ -1,4 +1,4 @@
-package com.example.controlify
+package com.example.controlify.server_list
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

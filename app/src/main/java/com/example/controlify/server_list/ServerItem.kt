@@ -1,4 +1,4 @@
-package com.example.controlify
+package com.example.controlify.server_list
 
 data class ServerItem(
     val id: String,

@@ -1,4 +1,4 @@
-package com.example.controlify
+package com.example.controlify.server_list
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.controlify.R
 import com.example.controlify.databinding.ActivityMainBinding
 import java.util.UUID
 

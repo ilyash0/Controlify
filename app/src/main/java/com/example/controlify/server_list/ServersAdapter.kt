@@ -1,4 +1,4 @@
-package com.example.controlify
+package com.example.controlify.server_list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.controlify.R
 
 class ServersAdapter(private val items: MutableList<ServerItem>, private val onClick: (ServerItem) -> Unit) :
     RecyclerView.Adapter<ServersAdapter.ViewHolder>() {

@@ -1,4 +1,4 @@
-package com.example.controlify
+package com.example.controlify.server_list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
