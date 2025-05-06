@@ -1,5 +1,9 @@
 package com.example.controlify.server_list
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ServerItem(
     val id: String,
     val name: String,
@@ -7,4 +11,4 @@ data class ServerItem(
     val imageResId: Int,
     val host: String,
     val port: Int = 22
-)
+) : Parcelable

@@ -1,6 +1,8 @@
 package com.example.controlify.server_list
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.controlify.R
 import com.example.controlify.databinding.ActivityMainBinding
+import com.example.controlify.server_detail.ServerDetailActivity
 import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
@@ -50,8 +53,12 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewServers)
         recyclerView.layoutManager = GridLayoutManager(this, 3)
 
-        adapter = ServersAdapter(vm.servers.value!!) { server ->
-            // обработка клика по серверу
+        adapter = ServersAdapter(vm.servers.value ?: mutableListOf()) { server ->
+            Log.d("ServersAdapter", "Click!")
+            val intent = Intent(this, ServerDetailActivity::class.java).apply {
+                putExtra(ServerDetailActivity.EXTRA_SERVER, server)
+            }
+            startActivity(intent)
         }
         recyclerView.adapter = adapter
     }
