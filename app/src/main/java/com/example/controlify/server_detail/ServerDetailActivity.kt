@@ -5,7 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.controlify.R
 import com.example.controlify.databinding.ActivityServerDetailBinding
 import com.example.controlify.server_list.ServerItem
 
