@@ -1,5 +1,6 @@
 package com.example.controlify.server_list
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,13 @@ class ServersAdapter(private val items: MutableList<ServerItem>, private val onC
     }
 
     override fun getItemCount(): Int = items.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newList: List<ServerItem>) {
+        items.clear()
+        items.addAll(newList)
+        notifyDataSetChanged()
+    }
 
     fun insert(item: ServerItem) {
         items.add(item)
