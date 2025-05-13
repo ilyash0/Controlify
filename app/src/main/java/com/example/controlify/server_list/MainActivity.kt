@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
@@ -69,6 +70,21 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(list.toList())
         }
         vm.loadServers()
+
+        val searchView = this.findViewById<SearchView>(R.id.searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredList = vm.servers.value?.filter {
+                    it.name.contains(newText ?: "", ignoreCase = true)
+                } ?: emptyList()
+                adapter.submitList(filteredList)
+                return true
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
