@@ -23,9 +23,6 @@ class ServerDetailViewModel(application: Application, private val server: Server
     private val _output = MutableLiveData<String>()
     val output: LiveData<String> = _output
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
-
     init {
         loadPresets()
     }
