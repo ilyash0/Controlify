@@ -39,12 +39,10 @@ class ServersAdapter(private val items: MutableList<ServerItem>, private val onC
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageServer: ImageView = itemView.findViewById(R.id.imageServer)
         private val textTitle: TextView = itemView.findViewById(R.id.textTitle)
-        private val textUpdated: TextView = itemView.findViewById(R.id.textUpdated)
 
         fun bind(item: ServerItem) {
             imageServer.setImageResource(item.imageResId)
             textTitle.text = item.name
-            textUpdated.text = item.updatedInfo
             itemView.setOnClickListener { onClick(item) }
         }
     }

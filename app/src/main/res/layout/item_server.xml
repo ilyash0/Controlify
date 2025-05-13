@@ -8,11 +8,11 @@
     app:cardElevation="4dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="112dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/imageServer"
@@ -29,13 +29,5 @@
             android:gravity="start"
             android:text="Title"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
-
-        <TextView
-            android:id="@+id/textUpdated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="Updated today"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

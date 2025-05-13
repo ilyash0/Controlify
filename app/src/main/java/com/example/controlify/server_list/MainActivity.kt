@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity() {
                 val newItem = ServerItem(
                     id = UUID.randomUUID().toString(),
                     name = etName.text.toString(),
-                    updatedInfo = "Updated today",
                     imageResId = R.drawable.ic_launcher_background,
                     host = etHost.text.toString(),
                     port = etPort.text.toString().toIntOrNull() ?: 22,
