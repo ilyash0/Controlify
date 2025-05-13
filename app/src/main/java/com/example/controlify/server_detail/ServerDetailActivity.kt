@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +15,7 @@ import com.example.controlify.R
 import com.example.controlify.databinding.ActivityServerDetailBinding
 import com.example.controlify.server_list.ServerItem
 import com.example.controlify.server_list.ServersViewModel
+import java.util.UUID
 
 class ServerDetailActivity : AppCompatActivity() {
     companion object {
@@ -26,7 +29,7 @@ class ServerDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityServerDetailBinding
     private val server by lazy { intent.getParcelableExtra<ServerItem>(EXTRA_SERVER)!! }
-    private val vm: ServerDetailViewModel by viewModels { ServerDetailViewModelFactory(server) }
+    private val vm: ServerDetailViewModel by viewModels { ServerDetailViewModelFactory(application, server) }
     private val viewModel: ServersViewModel by viewModels {
         ViewModelProvider.AndroidViewModelFactory.getInstance(application)
     }
@@ -44,7 +47,7 @@ class ServerDetailActivity : AppCompatActivity() {
         }
         binding.toolbar.setNavigationOnClickListener { finish() }
 
-        adapter = PresetAdapter { preset ->
+        adapter = PresetAdapter (vm.presets.value ?: mutableListOf())  { preset ->
             // TODO: выполнить команды
         }
         binding.rvPresets.layoutManager = LinearLayoutManager(this)
@@ -56,7 +59,7 @@ class ServerDetailActivity : AppCompatActivity() {
         vm.loadPresets()
 
         binding.fabAddPreset.setOnClickListener {
-            // TODO: показать диалог создания команд
+            showAddPreetDialog()
         }
     }
 
@@ -75,5 +78,25 @@ class ServerDetailActivity : AppCompatActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showAddPreetDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_preset, null)
+        val etName = dialogView.findViewById<EditText>(R.id.etName)
+        val etCommand = dialogView.findViewById<EditText>(R.id.etCommand)
+
+        AlertDialog.Builder(this)
+            .setTitle("New Command")
+            .setView(dialogView)
+            .setPositiveButton("Save") { _, _ ->
+                val newItem = CommandPreset(
+                    name = etName.text.toString(),
+                    command = etCommand.text.toString(),
+                )
+                vm.addPreset(newItem)
+                adapter.insert(newItem)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 }

@@ -1,13 +1,15 @@
 package com.example.controlify.server_detail
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.controlify.databinding.ItemPresetBinding
+import com.example.controlify.server_list.ServerItem
 
-class PresetAdapter(
+class PresetAdapter(private val items: MutableList<CommandPreset>,
     private val onClick: (CommandPreset) -> Unit
 ) : ListAdapter<CommandPreset, PresetAdapter.VH>(DIFF) {
 
@@ -30,4 +32,16 @@ class PresetAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder.bind(getItem(position))
+
+    fun insert(item: CommandPreset) {
+        items.add(item)
+        notifyItemInserted(items.lastIndex)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newList: List<CommandPreset>) {
+        items.clear()
+        items.addAll(newList)
+        notifyDataSetChanged()
+    }
 }

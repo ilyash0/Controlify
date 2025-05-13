@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.controlify.Prefs
 
 class ServersViewModel(application: Application) : AndroidViewModel(application) {
     private val _servers = MutableLiveData<MutableList<ServerItem>>()

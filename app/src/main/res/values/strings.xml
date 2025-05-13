@@ -10,6 +10,8 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="action_delete">Delete</string>
+    <string name="command_name">Command Name</string>
+    <string name="command">Command</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
