@@ -4,6 +4,8 @@
     <string name="server_name">Server Name</string>
     <string name="host">Host (IP or domain)</string>
     <string name="port">Port (22)</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Server List</string>
     <string name="second_fragment_label">Second Fragment</string>

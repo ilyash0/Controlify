@@ -16,6 +16,7 @@ import com.example.controlify.R
 import com.example.controlify.databinding.ActivityServerDetailBinding
 import com.example.controlify.server_list.ServerItem
 import com.example.controlify.server_list.ServersViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class ServerDetailActivity : AppCompatActivity() {
     companion object {
@@ -48,7 +49,7 @@ class ServerDetailActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
 
         adapter = PresetAdapter { preset ->
-            // TODO: выполнить команды
+            vm.runPreset(preset.command, this)
         }
         binding.rvPresets.layoutManager = LinearLayoutManager(this)
         binding.rvPresets.adapter = adapter
@@ -61,6 +62,12 @@ class ServerDetailActivity : AppCompatActivity() {
 
         binding.fabAddPreset.setOnClickListener {
             showAddPresetDialog()
+        }
+
+        vm.output.observe(this) { text ->
+            val message = text.takeUnless { it.isNullOrBlank() }
+                ?: "No Response"
+            Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
         }
     }
 

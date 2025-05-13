@@ -10,5 +10,7 @@ data class ServerItem(
     val updatedInfo: String,
     val imageResId: Int,
     val host: String,
-    val port: Int = 22
+    val port: Int = 22,
+    val username: String = "",
+    val password: String = "",
 ) : Parcelable

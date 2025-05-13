@@ -92,6 +92,8 @@ class MainActivity : AppCompatActivity() {
         val etName = dialogView.findViewById<EditText>(R.id.etName)
         val etHost = dialogView.findViewById<EditText>(R.id.etHost)
         val etPort = dialogView.findViewById<EditText>(R.id.etPort)
+        val etUsername = dialogView.findViewById<EditText>(R.id.etUsername)
+        val etPassword = dialogView.findViewById<EditText>(R.id.etPassword)
 
         AlertDialog.Builder(this)
             .setTitle("New Server")
@@ -103,7 +105,9 @@ class MainActivity : AppCompatActivity() {
                     updatedInfo = "Updated today",
                     imageResId = R.drawable.ic_launcher_background,
                     host = etHost.text.toString(),
-                    port = etPort.text.toString().toIntOrNull() ?: 22
+                    port = etPort.text.toString().toIntOrNull() ?: 22,
+                    username = etUsername.text.toString(),
+                    password = etPassword.text.toString()
                 )
                 vm.addServer(newItem)
                 adapter.insert(newItem)

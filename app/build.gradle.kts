@@ -53,4 +53,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.gson)
+    implementation("com.jcraft:jsch:0.1.55")
 }
