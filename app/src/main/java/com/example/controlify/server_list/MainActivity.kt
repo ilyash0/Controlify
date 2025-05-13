@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewServers)
         recyclerView.layoutManager = GridLayoutManager(this, 3)
 
-        adapter = ServersAdapter(vm.servers.value ?: mutableListOf()) { server ->
+        adapter = ServersAdapter { server ->
             Log.d("ServersAdapter", "Click!")
             val intent = Intent(this, ServerDetailActivity::class.java).apply {
                 putExtra(ServerDetailActivity.EXTRA_SERVER, server)
@@ -64,6 +64,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         recyclerView.adapter = adapter
+
+        vm.servers.observe(this) { list ->
+            adapter.submitList(list.toList())
+        }
+        vm.loadServers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -109,7 +114,6 @@ class MainActivity : AppCompatActivity() {
                     password = etPassword.text.toString()
                 )
                 vm.addServer(newItem)
-                adapter.insert(newItem)
             }
             .setNegativeButton("Cancel", null)
             .show()
@@ -118,6 +122,5 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         vm.loadServers()
-        adapter.updateData(vm.servers.value ?: mutableListOf())
     }
 }
