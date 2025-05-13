@@ -3,6 +3,7 @@ package com.example.controlify.server_detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -15,7 +16,6 @@ import com.example.controlify.R
 import com.example.controlify.databinding.ActivityServerDetailBinding
 import com.example.controlify.server_list.ServerItem
 import com.example.controlify.server_list.ServersViewModel
-import java.util.UUID
 
 class ServerDetailActivity : AppCompatActivity() {
     companion object {
@@ -47,19 +47,20 @@ class ServerDetailActivity : AppCompatActivity() {
         }
         binding.toolbar.setNavigationOnClickListener { finish() }
 
-        adapter = PresetAdapter (vm.presets.value ?: mutableListOf())  { preset ->
+        adapter = PresetAdapter { preset ->
             // TODO: выполнить команды
         }
         binding.rvPresets.layoutManager = LinearLayoutManager(this)
         binding.rvPresets.adapter = adapter
 
         vm.presets.observe(this) { list ->
-            adapter.submitList(list)
+            Log.d("ServerDetailActivity", "Observe got: $list")
+            adapter.submitList(list.toList())
         }
         vm.loadPresets()
 
         binding.fabAddPreset.setOnClickListener {
-            showAddPreetDialog()
+            showAddPresetDialog()
         }
     }
 
@@ -80,7 +81,7 @@ class ServerDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun showAddPreetDialog() {
+    private fun showAddPresetDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_preset, null)
         val etName = dialogView.findViewById<EditText>(R.id.etName)
         val etCommand = dialogView.findViewById<EditText>(R.id.etCommand)
@@ -94,9 +95,9 @@ class ServerDetailActivity : AppCompatActivity() {
                     command = etCommand.text.toString(),
                 )
                 vm.addPreset(newItem)
-                adapter.insert(newItem)
             }
             .setNegativeButton("Cancel", null)
             .show()
     }
+
 }

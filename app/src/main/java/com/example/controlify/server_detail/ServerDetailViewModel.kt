@@ -21,9 +21,10 @@ class ServerDetailViewModel(application: Application, private val server: Server
     }
 
     fun addPreset(preset: CommandPreset) {
-        val current = _presets.value ?: mutableListOf()
-        val updated = (current + preset).toMutableList()
-        _presets.value = updated
+        val current = _presets.value ?: emptyList()
+        val updated = current + preset
+        _presets.value = updated.toMutableList()
+        Log.d("ServerDetailVM", "Presets now: ${_presets.value}")
         Prefs.savePresets(getApplication(), server.id, updated)
     }
 
